@@ -19,7 +19,7 @@ class MyView1 extends PageViewElement {
     return html`
       ${SharedStyles}
       <section>
-        <h2>Static page</h2>
+        <h2>Static page (test by Haseeb)</h2>
         <p>This is a text-only page.</p>
         <p>It doesn't do anything other than display some static text.</p>
       </section>

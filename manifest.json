@@ -1,20 +1,20 @@
 {
-  "name": "My App",
-  "short_name": "My App",
-  "description": "My App description",
+  "name": "Soccer Squad",
+  "short_name": "Soccer Squad",
+  "description": "Soccer Squad intro",
   "start_url": "/",
   "display": "standalone",
   "theme_color": "#3f51b5",
   "background_color": "#3f51b5",
   "icons": [
     {
-      "src": "images/manifest/icon-192x192.png",
-      "sizes": "192x192",
+      "src": "images/manifest/SS.png",
+      "sizes": "530x600",
       "type": "image/png"
     },
     {
-      "src": "images/manifest/icon-512x512.png",
-      "sizes": "512x512",
+      "src": "images/manifest/SS.png",
+      "sizes": "530x600",
       "type": "image/png"
     }
   ]

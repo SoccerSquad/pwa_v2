@@ -29,20 +29,32 @@ export const navigate = (path) => (dispatch) => {
 const loadPage = (page) => (dispatch) => {
   switch(page) {
     case 'home':
-      import('../components/ss-home.js').then((module) => {
+        import('../components/ss-home.js').then((module) => {
         // Put code in here that you want to run every time when
         // navigating to home after ss-home.js is loaded.
-      });
-      break;
+        });
+        break;
+    case 'createProfile':
+        import('../components/ss-create-profile.js');
+        break;
+    case 'createGame':
+        import('../components/ss-create-game.js');
+        break;
+    case 'joinGame':
+        import('../components/ss-join-game.js');
+        break;
+    case 'pendingGames':
+        import('../components/ss-pending-games.js');
+        break;
     case 'view2':
-      import('../components/my-view2.js');
-      break;
+        import('../components/my-view2.js');
+        break;
     case 'view3':
-      import('../components/my-view3.js');
-      break;
+        import('../components/my-view3.js');
+        break;
     default:
-      page = 'view404';
-      import('../components/my-view404.js');
+        page = 'view404';
+        import('../components/my-view404.js');
   }
 
   dispatch(updatePage(page));

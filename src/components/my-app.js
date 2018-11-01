@@ -212,13 +212,17 @@ class MyApp extends connect(store)(LitElement) {
     <!-- Main content -->
     <main role="main" class="main-content">
       <ss-home class="page" ?active="${this._page === 'home'}"></ss-home>
+      <ss-create-profile class="page" ?active="${this._page === 'createProfile'}"></ss-create-profile>
+      <ss-create-game class="page" ?active="${this._page === 'createGame'}"></ss-create-game>
+      <ss-pending-games class="page" ?active="${this._page === 'joinGame'}"></ss-pending-games>
+      <ss-join-game class="page" ?active="${this._page === 'pendingGames'}"></ss-join-game>
       <my-view2 class="page" ?active="${this._page === 'view2'}"></my-view2>
       <my-view3 class="page" ?active="${this._page === 'view3'}"></my-view3>
       <my-view404 class="page" ?active="${this._page === 'view404'}"></my-view404>
     </main>
 
     <footer>
-      <p>Made with &hearts; by the Polymer team.</p>
+      <p>"${this.appTitle + '-' + this._page}"</p>
     </footer>
 
     <snack-bar ?active="${this._snackbarOpened}">

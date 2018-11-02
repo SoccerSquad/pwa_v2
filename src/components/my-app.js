@@ -70,14 +70,19 @@ class MyApp extends connect(store)(LitElement) {
         border-bottom: 1px solid #eee;
       }
 
+      .logo {
+          height: 120px;
+          width: 106px;
+      }
+
       .toolbar-top {
         background-color: var(--app-header-background-color);
       }
 
       [main-title] {
-        font-family: 'Pacifico';
-        text-transform: lowercase;
-        font-size: 30px;
+        font-family: 'Circular';
+        text-transform: uppercase;
+        font-size: 40px;
         /* In the narrow layout, the toolbar is offset by the width of the
         drawer button, and the text looks not centered. Add a padding to
         match that button */
@@ -168,7 +173,7 @@ class MyApp extends connect(store)(LitElement) {
         }
 
         .main-content {
-          padding-top: 107px;
+          padding-top: 190px;
         }
 
         /* The drawer button isn't shown in the wide layout, so we don't
@@ -185,12 +190,12 @@ class MyApp extends connect(store)(LitElement) {
         <button class="menu-btn" title="Menu" @click="${this._menuButtonClicked}">${menuIcon}</button>
         <div main-title>${this.appTitle}</div>
       </app-toolbar>
-
+      <img class="logo" src="images/SS.png" alt="Soccer Squad Logo"/>
       <!-- This gets hidden on a small screen-->
       <nav class="toolbar-list">
-        <a ?selected="${this._page === 'view1'}" href="/view1">View One</a>
-        <a ?selected="${this._page === 'view2'}" href="/view2">View Two</a>
-        <a ?selected="${this._page === 'view3'}" href="/view3">View Three</a>
+        <a ?selected="${this._page === 'home'}" href="/home">Home</a>
+        <a ?selected="${this._page === 'pendingGames'}" href="/pendingGames">Pending Games</a>
+        <a ?selected="${this._page === 'settings'}" href="/settings">Settings</a>
       </nav>
     </app-header>
 
@@ -198,22 +203,25 @@ class MyApp extends connect(store)(LitElement) {
     <app-drawer .opened="${this._drawerOpened}"
         @opened-changed="${this._drawerOpenedChanged}">
       <nav class="drawer-list">
-        <a ?selected="${this._page === 'view1'}" href="/view1">View One</a>
-        <a ?selected="${this._page === 'view2'}" href="/view2">View Two</a>
-        <a ?selected="${this._page === 'view3'}" href="/view3">View Three</a>
+        <a ?selected="${this._page === 'home'}" href="/home">Home</a>
+        <a ?selected="${this._page === 'pendingGames'}" href="/pendingGames">Pending Games</a>
+        <a ?selected="${this._page === 'settings'}" href="/settings">Settings</a>
       </nav>
     </app-drawer>
 
     <!-- Main content -->
     <main role="main" class="main-content">
-      <my-view1 class="page" ?active="${this._page === 'view1'}"></my-view1>
-      <my-view2 class="page" ?active="${this._page === 'view2'}"></my-view2>
-      <my-view3 class="page" ?active="${this._page === 'view3'}"></my-view3>
+      <ss-home class="page" ?active="${this._page === 'home'}"></ss-home>
+      <ss-create-profile class="page" ?active="${this._page === 'createProfile'}"></ss-create-profile>
+      <ss-create-game class="page" ?active="${this._page === 'createGame'}"></ss-create-game>
+      <ss-pending-games class="page" ?active="${this._page === 'pendingGames'}"></ss-pending-games>
+      <ss-join-game class="page" ?active="${this._page === 'joinGame'}"></ss-join-game>
+      <ss-settings class="page" ?active="${this._page === 'settings'}"></ss-settings>
       <my-view404 class="page" ?active="${this._page === 'view404'}"></my-view404>
     </main>
 
     <footer>
-      <p>Made with &hearts; by the Polymer team.</p>
+      <p>"${this.appTitle + '-' + this._page}"</p>
     </footer>
 
     <snack-bar ?active="${this._snackbarOpened}">

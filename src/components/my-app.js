@@ -194,8 +194,8 @@ class MyApp extends connect(store)(LitElement) {
       <!-- This gets hidden on a small screen-->
       <nav class="toolbar-list">
         <a ?selected="${this._page === 'home'}" href="/home">Home</a>
-        <a ?selected="${this._page === 'view2'}" href="/view2">View Two</a>
-        <a ?selected="${this._page === 'view3'}" href="/view3">View Three</a>
+        <a ?selected="${this._page === 'pendingGames'}" href="/pendingGames">Pending Games</a>
+        <a ?selected="${this._page === 'settings'}" href="/settings">Settings</a>
       </nav>
     </app-header>
 
@@ -204,8 +204,8 @@ class MyApp extends connect(store)(LitElement) {
         @opened-changed="${this._drawerOpenedChanged}">
       <nav class="drawer-list">
         <a ?selected="${this._page === 'home'}" href="/home">Home</a>
-        <a ?selected="${this._page === 'view2'}" href="/view2">View Two</a>
-        <a ?selected="${this._page === 'view3'}" href="/view3">View Three</a>
+        <a ?selected="${this._page === 'pendingGames'}" href="/pendingGames">Pending Games</a>
+        <a ?selected="${this._page === 'settings'}" href="/settings">Settings</a>
       </nav>
     </app-drawer>
 
@@ -214,10 +214,9 @@ class MyApp extends connect(store)(LitElement) {
       <ss-home class="page" ?active="${this._page === 'home'}"></ss-home>
       <ss-create-profile class="page" ?active="${this._page === 'createProfile'}"></ss-create-profile>
       <ss-create-game class="page" ?active="${this._page === 'createGame'}"></ss-create-game>
-      <ss-pending-games class="page" ?active="${this._page === 'joinGame'}"></ss-pending-games>
-      <ss-join-game class="page" ?active="${this._page === 'pendingGames'}"></ss-join-game>
-      <my-view2 class="page" ?active="${this._page === 'view2'}"></my-view2>
-      <my-view3 class="page" ?active="${this._page === 'view3'}"></my-view3>
+      <ss-pending-games class="page" ?active="${this._page === 'pendingGames'}"></ss-pending-games>
+      <ss-join-game class="page" ?active="${this._page === 'joinGame'}"></ss-join-game>
+      <ss-settings class="page" ?active="${this._page === 'settings'}"></ss-settings>
       <my-view404 class="page" ?active="${this._page === 'view404'}"></my-view404>
     </main>
 

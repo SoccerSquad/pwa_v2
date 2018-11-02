@@ -46,11 +46,8 @@ const loadPage = (page) => (dispatch) => {
     case 'pendingGames':
         import('../components/ss-pending-games.js');
         break;
-    case 'view2':
-        import('../components/my-view2.js');
-        break;
-    case 'view3':
-        import('../components/my-view3.js');
+    case 'settings':
+        import('../components/ss-settings.js');
         break;
     default:
         page = 'view404';

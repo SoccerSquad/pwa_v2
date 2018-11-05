@@ -26,7 +26,7 @@ class Home extends connect(store)(PageViewElement) {
     </style>
 
       <section style = "text-align:center">
-          <paper-button raised><a href="/createProfile">Create Profile</a></paper-button>
+          <paper-button raised><a href="/editProfile">Edit Profile</a></paper-button>
           <p></p>
           <paper-button raised><a href="/createGame">Create Game</a></paper-button>
           <p></p>

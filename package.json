@@ -22,6 +22,7 @@
   "dependencies": {
     "@polymer/app-layout": "^3.0.0",
     "@polymer/iron-form": "^3.0.1",
+    "@polymer/iron-overlay-behavior": "^3.0.2",
     "@polymer/lit-element": "^0.6.2",
     "@polymer/paper-button": "^3.0.1",
     "@polymer/paper-checkbox": "^3.1.0",
@@ -31,11 +32,15 @@
     "@polymer/paper-listbox": "^3.0.1",
     "@polymer/paper-toast": "^3.0.1",
     "@polymer/polymer": "^3.0.0",
+    "@vaadin/vaadin-date-picker": "^3.3.0",
+    "@vaadin/vaadin-time-picker": "^1.1.0",
     "@webcomponents/webcomponentsjs": "^2.0.0",
+    "paper-input-place": "^2.0.1",
     "pwa-helpers": "^0.9.0",
     "redux": "^4.0.0",
     "redux-thunk": "^2.3.0",
     "reselect": "^3.0.1",
+    "time-field": "0.0.4",
     "web-animations-js": "^2.3.1"
   },
   "devDependencies": {

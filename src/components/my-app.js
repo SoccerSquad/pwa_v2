@@ -212,7 +212,8 @@ class MyApp extends connect(store)(LitElement) {
     <!-- Main content -->
     <main role="main" class="main-content">
       <ss-home class="page" ?active="${this._page === 'home'}"></ss-home>
-      <ss-create-profile class="page" ?active="${this._page === 'createProfile'}"></ss-create-profile>
+      <ss-edit-profile class="page" ?active="${this._page === 'editProfile'}"></ss-edit-profile>
+      <ss-element-view-profile class="page" ?active="${this._page === 'viewProfile'}"></ss-element-view-profile>
       <ss-create-game class="page" ?active="${this._page === 'createGame'}"></ss-create-game>
       <ss-pending-games class="page" ?active="${this._page === 'pendingGames'}"></ss-pending-games>
       <ss-join-game class="page" ?active="${this._page === 'joinGame'}"></ss-join-game>

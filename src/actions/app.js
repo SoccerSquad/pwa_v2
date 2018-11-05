@@ -34,8 +34,11 @@ const loadPage = (page) => (dispatch) => {
         // navigating to home after ss-home.js is loaded.
         });
         break;
-    case 'createProfile':
-        import('../components/ss-create-profile.js');
+    case 'editProfile':
+        import('../components/ss-edit-profile.js');
+        break;
+    case 'viewProfile':
+        import('../components/ss-element-view-profile.js');
         break;
     case 'createGame':
         import('../components/ss-create-game.js');

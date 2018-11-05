@@ -11,13 +11,13 @@ import '@polymer/paper-button/paper-button.js';
 import '@polymer/paper-toast/paper-toast.js';
 import 'paper-input-place/paper-input-place.js';
 import '@vaadin/vaadin-date-picker';
-import 'time-field/time-field-input.js';
+import '@vaadin/vaadin-time-picker';
 import { PageViewElement } from './page-view-element.js';
 
 import { connect } from 'pwa-helpers/connect-mixin.js';
 import { store } from '../store.js';
 // These are the actions needed by this element.
-import { submit, reset } from '../actions/profile-submit.js';
+import { submit, reset } from '../actions/create-game.js';
 
 // We are lazy loading its reducer.
 import pending_games from '../reducers/pendingGames.js';
@@ -44,6 +44,10 @@ class CreateGame extends connect(store)(PageViewElement) {
           margin: auto;
           width: 250px;
       }
+      vaadin-time-picker {
+          width: 150px;
+          margin: auto;
+      }
       paper-input + p {
           margin-top: 30px;
       }
@@ -53,7 +57,8 @@ class CreateGame extends connect(store)(PageViewElement) {
       vaadin-date-picker + p {
           margin-top: 30px;
       }
-      time-field-input + p {
+      vaadin-time-picker + p {
+          margin: auto;
           margin-top: 30px;
       }
       paper-dropdown-menu + p {
@@ -70,7 +75,7 @@ class CreateGame extends connect(store)(PageViewElement) {
                 <p></p>
                 <vaadin-date-picker id="date" label="Game Day" value="1901-01-01"></vaadin-date-picker>
                 <p></p>
-                <time-field-input id="time" label="Time" value="00:00"></time-field-input>
+                <vaadin-time-picker id="time" label="Time" value="00:00"></vaadin-time-picker>
                 <p></p>
                 <paper-dropdown-menu label="Players" id="players" required>
                   <paper-listbox class="dropdown-content" slot="dropdown-content">
@@ -89,15 +94,13 @@ class CreateGame extends connect(store)(PageViewElement) {
                   </paper-listbox>
                 </paper-dropdown-menu>
                 <p></p>
-                <paper-button raised @click="${this._submit}">Submit</paper-button>
-                <paper-button raised @click="${this._reset}">Reset</paper-button>
+                <paper-button raised @click="${this._submit}">Create Game</paper-button>
                 <br><br>
                 <paper-button raised><a href="/pendingGames">Pending Games</a></paper-button>
             </form>
         </iron-form>
         <br><br>
         <paper-toast id="saved" text="Game Created"></paper-toast>
-        <paper-toast id="reset" text="Reset"></paper-toast>
     </section>
     `;
     }
@@ -114,20 +117,7 @@ class CreateGame extends connect(store)(PageViewElement) {
         var temp_players = this.shadowRoot.querySelector("#players");
         var temp_saved = this.shadowRoot.querySelector("#saved");
         temp_saved.show();
-        store.dispatch(submit(temp_loc.value, temp_date.value, temp_time.value, temp_players.value));
-    }
-
-    _reset() {
-        var temp_loc = this.shadowRoot.querySelector("#location");
-        var temp_date = this.shadowRoot.querySelector("#date");
-        var temp_time = this.shadowRoot.querySelector("#time");
-        var temp_players = this.shadowRoot.querySelector("#players");
-        temp_loc.value = 'nowhere';
-        temp_date.value = "01-01-1980";
-        temp_time.value = "00:00";
-        temp_players.value = "0";
-        var temp_reset = this.shadowRoot.querySelector("#reset");
-        temp_reset.show();
+        store.dispatch(submit(temp_loc.value.search, temp_date.value, temp_time.value, temp_players.value));
     }
 
     // This is called every time something is updated in the store.

@@ -23,7 +23,7 @@ class ViewProfileElement extends connect(store)(PageViewElement) {
               padding-top: 100px;
           }
           span {
-              width: 200px;
+              width: 150px;
               font-weight: bold;
           }
           paper-item {
@@ -39,9 +39,9 @@ class ViewProfileElement extends connect(store)(PageViewElement) {
           }
       </style>
       <section>
-          <paper-item>Name: <span>${this._name}</span></paper-item>
-          <paper-item>Position: <span>${this._position}</span></paper-item>
-          <paper-item>Skill Level: <span>${this._skill}</span></paper-item>
+          <paper-item><span>Name: </span><span>${this._name}</span></paper-item>
+          <paper-item><span>Position: </span><span>${this._position}</span></paper-item>
+          <paper-item><span>Skill Level: </span><span>${this._skill}</span></paper-item>
           <p></p>
           <paper-button raised><a href="/editProfile">Edit Profile</a></paper-button>
           <p></p>

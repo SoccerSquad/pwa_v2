@@ -1,20 +1,22 @@
 
 
-export const FORM_SUBMIT = 'FORM_SUBMIT';
-export const FORM_RESET = 'FORM_RESET'
+export const FORM_GAME_SUBMIT = 'FORM_GAME_SUBMIT';
+export const FORM_GAME_RESET = 'FORM_GAME_RESET'
 
-export const submit = (location, date, time, players) => {
+export const game_submit = (location, date, time, total_players, remaining_slots, roster) => {
   return {
-    type: FORM_SUBMIT,
+    type: FORM_GAME_SUBMIT,
     location,
     date,
     time,
-    players
+    total_players,
+    remaining_slots,
+    roster
   };
 };
 
-export const reset = () => {
+export const game_reset = () => {
   return {
-    type: FORM_RESET
+    type: FORM_GAME_RESET
   };
 };

@@ -17,7 +17,7 @@ import { PageViewElement } from './page-view-element.js';
 import { connect } from 'pwa-helpers/connect-mixin.js';
 import { store } from '../store.js';
 // These are the actions needed by this element.
-import { submit, reset } from '../actions/create-game.js';
+import { game_submit, game_reset } from '../actions/create-game.js';
 
 // We are lazy loading its reducer.
 import pending_games from '../reducers/pendingGames.js';
@@ -108,6 +108,7 @@ class CreateGame extends connect(store)(PageViewElement) {
     static get properties() { return {
         // This is the data from the store.
         _pendingGames: { type: Array },
+        _roster: { type: Object }
     }}
 
     _submit() {
@@ -116,13 +117,17 @@ class CreateGame extends connect(store)(PageViewElement) {
         var temp_time = this.shadowRoot.querySelector("#time");
         var temp_players = this.shadowRoot.querySelector("#players");
         var temp_saved = this.shadowRoot.querySelector("#saved");
+        var total_players = parseInt(temp_players.value, 10);
+        var remaining_slots = total_players-1;
+        var roster = [JSON.parse(JSON.stringify(this._roster))];
         temp_saved.show();
-        store.dispatch(submit(temp_loc.value.search, temp_date.value, temp_time.value, temp_players.value));
+        store.dispatch(game_submit(temp_loc.value.search, temp_date.value, temp_time.value, total_players.toString(), remaining_slots.toString(), roster));
     }
 
     // This is called every time something is updated in the store.
     stateChanged(state) {
         this._pendingGames = state.pending_games.pending_games;
+        this._roster = JSON.parse(JSON.stringify(state.profile));
     }
 }
 

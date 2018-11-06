@@ -1,6 +1,6 @@
 
 
-import { FORM_SUBMIT, FORM_RESET } from '../actions/create-game.js';
+import { FORM_GAME_SUBMIT, FORM_GAME_RESET } from '../actions/create-game.js';
 
 const INITIAL_STATE = {
   pending_games: new Array(),
@@ -8,7 +8,7 @@ const INITIAL_STATE = {
 
 const addGame = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case FORM_SUBMIT:
+    case FORM_GAME_SUBMIT:
       return {
           pending_games: [
               ...state.pending_games,
@@ -16,7 +16,9 @@ const addGame = (state = INITIAL_STATE, action) => {
                   location: action.location,
                   date: action.date,
                   time: action.time,
-                  players: action.players,
+                  total_players: action.total_players,
+                  remaining_slots: action.remaining_slots,
+                  roster: action.roster
               }
           ]
       };

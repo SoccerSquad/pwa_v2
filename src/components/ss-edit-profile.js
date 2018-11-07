@@ -22,7 +22,7 @@ store.addReducers({
   profile
 });
 
-class CreateProfile extends connect(store)(PageViewElement) {
+class EditProfile extends connect(store)(PageViewElement) {
 
     render() {
     return html`
@@ -31,6 +31,12 @@ class CreateProfile extends connect(store)(PageViewElement) {
           text-align: center;
           padding-top: 100px;
       }
+
+      paper-toast {
+          text-align: center;
+          padding-top: 100px;
+      }
+
       paper-input {
           margin: auto;
           width: 250px;
@@ -78,8 +84,10 @@ class CreateProfile extends connect(store)(PageViewElement) {
                   </paper-listbox>
                 </paper-dropdown-menu>
                 <br><br>
-                <paper-button raised @click="${this._submit}">Submit</paper-button>
+                <paper-button raised @click="${this._submit}">Save</paper-button>
                 <paper-button raised @click="${this._reset}">Reset</paper-button>
+                <br><br>
+                <paper-button raised><a href="/viewProfile">View Profile</a></paper-button>
             </form>
         </iron-form>
         <br><br>
@@ -94,7 +102,7 @@ class CreateProfile extends connect(store)(PageViewElement) {
         _name: { type: String },
         _position: { type: String },
         _skill: {type: String},
-        _saved: {type: Boolean},
+        _saved: {type: String},
     }}
 
     _submit() {
@@ -102,9 +110,9 @@ class CreateProfile extends connect(store)(PageViewElement) {
         var temp_pos = this.shadowRoot.querySelector("#position");
         var temp_skill = this.shadowRoot.querySelector("#skill");
         var temp_saved = this.shadowRoot.querySelector("#saved");
+        var saved = "true";
         temp_saved.show();
-        console.log(temp_name.value + ' ' + temp_pos.value +' '+ temp_skill.value);
-        store.dispatch(submit(temp_name.value, temp_pos.value, temp_skill.value, true));
+        store.dispatch(submit(temp_name.value, temp_pos.value, temp_skill.value, saved));
     }
 
     _reset() {
@@ -128,4 +136,4 @@ class CreateProfile extends connect(store)(PageViewElement) {
     }
 }
 
-window.customElements.define('ss-create-profile', CreateProfile);
+window.customElements.define('ss-edit-profile', EditProfile);

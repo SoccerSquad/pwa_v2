@@ -6,7 +6,7 @@ const INITIAL_STATE = {
   name: 'Player1',
   position: 'GK',
   skill: 'Intermediate',
-  saved: false
+  saved: 'false'
 };
 
 const updateProfile = (state = INITIAL_STATE, action) => {
@@ -23,7 +23,7 @@ const updateProfile = (state = INITIAL_STATE, action) => {
           name: 'Player1',
           position: 'GK',
           skill: 'Intermediate',
-          saved: false,
+          saved: 'false',
       };
     default:
       return state;

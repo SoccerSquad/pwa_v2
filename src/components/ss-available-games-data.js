@@ -1,0 +1,9 @@
+export const data = [
+    {"location":"Allen Field", "date": "2018-11-07", "time": "21:00", "total_players": "14", "filled_spots": "4", "roster": [{"name":"Messi", "position":"RW (Right Winger)", "skill":"Professional"}, {"name":"Won", "position":"LW (Left Winger)", "skill":"Professional"}, {"name":"Haseeb", "position":"CF (Center Forward)", "skill":"Intermediate"}, {"name":"Ahmad", "position":"DM (Defensive Midfielder)", "skill":"Intermediate"}]}
+    , {"location":"Muir Field", "date": "2018-11-14", "time": "10:00", "total_players": "22", "filled_spots": "3", "roster": [{"name":"Anderson", "position":"RW (Right Winger)", "skill":"Professional"}, {"name":"Cook", "position":"LW (Left Winger)", "skill":"Professional"}, {"name":"Steyn", "position":"DM (Defensive Midfielder)", "skill":"Intermediate"}]}
+    , {"location":"Doyle Park", "date": "2018-11-21", "time": "06:30", "total_players": "6", "filled_spots": "5", "roster": [{"name":"McGrath", "position":"RW (Right Winger)", "skill":"Professional"}, {"name":"Kallis", "position":"LW (Left Winger)", "skill":"Professional"}, {"name":"Waqar", "position":"CF (Center Forward)", "skill":"Intermediate"}, {"name":"Murali", "position":"DM (Defensive Midfielder)", "skill":"Intermediate"}, {"name":"Kumble", "position":"CF (Center Forward)", "skill":"Professional"}]}
+    , {"location":"Allen Field Field", "date": "2018-11-28", "time": "15:00", "total_players": "10", "filled_spots": "1", "roster": [{"name":"Ronaldinho", "position":"CF (Center Forward)", "skill":"Intermediate"}]}
+    , {"location":"Rimac Arena", "date": "2018-12-05", "time": "18:00", "total_players": "16", "filled_spots": "2", "roster": [{"name":"Messi", "position":"RW (Right Winger)", "skill":"Professional"}, {"name":"Warne", "position":"LW (Left Winger)", "skill":"Professional"}]}
+];
+
+export default data;

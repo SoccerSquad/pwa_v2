@@ -222,7 +222,7 @@ class MyApp extends connect(store)(LitElement) {
     </main>
 
     <footer>
-      <p>"${this.appTitle + '-' + this._page}"</p>
+      <p>${this.appTitle + '-' + this._page}</p>
     </footer>
 
     <snack-bar ?active="${this._snackbarOpened}">

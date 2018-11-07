@@ -36,6 +36,7 @@
     "@polymer/paper-material": "^3.0.1",
     "@polymer/paper-toast": "^3.0.1",
     "@polymer/polymer": "^3.0.0",
+    "@vaadin/vaadin-combo-box": "^4.2.0",
     "@vaadin/vaadin-date-picker": "^3.3.0",
     "@vaadin/vaadin-time-picker": "^1.1.0",
     "@webcomponents/webcomponentsjs": "^2.0.0",

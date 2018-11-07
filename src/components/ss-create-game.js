@@ -33,6 +33,8 @@ class CreateGame extends connect(store)(PageViewElement) {
       section {
           text-align: center;
           padding-top: 100px;
+          width: 600px;
+          margin: auto;
       }
 
       paper-toast {
@@ -64,17 +66,38 @@ class CreateGame extends connect(store)(PageViewElement) {
       paper-dropdown-menu + p {
           margin-top: 30px;
       }
+      iron-form {
+          text-align: center;
+          width: 600px;
+          margin: auto;
+      }
+      form {
+          text-align: center;
+          width: 600px;
+          margin: auto;
+      }
+      paper-item {
+          text-align: center;
+          width: 400px;
+          margin: auto;
+      }
+      .headers {
+          margin: auto;
+      }
     </style>
 
     <section style = "text-align:center">
 
         <iron-form id="form1" allowRedirect="true">
             <form action="/createGame" method="get">
+                <paper-item><div class="headers">Pick one of the available fields:</div></paper-item>
                 <paper-input-place id="location" api-key="AIzaSyAzpe2bMiDOVEUjAyS29f9JyZlM5Y2K6rY" value=""
                 label="Pick a place" hide-error></paper-input-place>
                 <p></p>
+                <paper-item><div class="headers">Pick one of the available dates:</div></paper-item>
                 <vaadin-date-picker id="date" label="Game Day" value="1901-01-01"></vaadin-date-picker>
                 <p></p>
+                <paper-item><div class="headers">Pick one of the available time slots:</div></paper-item>
                 <vaadin-time-picker id="time" label="Time" value="00:00"></vaadin-time-picker>
                 <p></p>
                 <paper-dropdown-menu label="Players" id="players" required>
@@ -118,10 +141,10 @@ class CreateGame extends connect(store)(PageViewElement) {
         var temp_players = this.shadowRoot.querySelector("#players");
         var temp_saved = this.shadowRoot.querySelector("#saved");
         var total_players = parseInt(temp_players.value, 10);
-        var remaining_slots = total_players-1;
+        var filled_spots = 1;
         var roster = [JSON.parse(JSON.stringify(this._roster))];
         temp_saved.show();
-        store.dispatch(game_submit(temp_loc.value.search, temp_date.value, temp_time.value, total_players.toString(), remaining_slots.toString(), roster));
+        store.dispatch(game_submit(temp_loc.value.search, temp_date.value, temp_time.value, total_players.toString(), filled_spots.toString(), roster));
     }
 
     // This is called every time something is updated in the store.

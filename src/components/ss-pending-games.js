@@ -29,10 +29,6 @@ class PendingGames extends connect(store)(PageViewElement) {
                 width: 100%;
                 margin: auto;
             }
-            .details {
-                position: absolute;
-                z-index: -1;
-            }
             paper-item + p {
                 margin-top: 3px;
             }
@@ -40,17 +36,20 @@ class PendingGames extends connect(store)(PageViewElement) {
                 margin: auto;
                 text-align: center;
             }
-            iron-list {
+            .all_games {
                 --iron-list-items-container: {
                     margin: auto;
                 };
                 text-align: center;
                 width: 600px;
                 margin: auto;
-                height: 50vh; /* don't use % values unless the parent element is sized. */
+                height: 70vh; /* don't use % values unless the parent element is sized. */
+            }
+            .roster {
+                20vh;
             }
             span {
-                width: 200px;
+                width: 150px;
                 font-weight: bold;
             }
             paper-card {
@@ -59,21 +58,19 @@ class PendingGames extends connect(store)(PageViewElement) {
             }
         </style>
         <section style = "text-align:center">
-            <iron-list id="all_games" items="${JSON.stringify(this._pendingGames)}" as="game">
+            <iron-list class="all_games" items="${JSON.stringify(this._pendingGames)}" as="game">
                 <template>
                     <div class="vertical-section-container">
                         <paper-card>
-                            <paper-item><span>Game: [[game.location]]</span><span>Date: [[game.date]]</span><span>Time: [[game.time]]</span></paper-item>
-                            <simple-expand-collapse>
-                                <div class="details">
-                                    <paper-item>Roster: </paper-item>
-                                    <iron-list items="[[game.roster]]" as="player">
-                                        <template>
-                                            <paper-item><span>Name: [[player.name]]</span><span>Position: [[player.position]]</span><span>Skill: [[player.skill]]</span></paper-item>
-                                        </template>
-                                    </iron-list>
-                                </div>
-                            </simple-expand-collapse>
+                            <paper-item><span>Game: [[game.location]]</span><span>Date: [[game.date]]</span><span>Time: [[game.time]]</span><span>Spots Filled: [[game.filled_spots]]/[[game.total_players]]</span></paper-item>
+                            <div class="details">
+                                <paper-item>Roster: </paper-item>
+                                <iron-list class="roster" items="[[game.roster]]" as="player">
+                                    <template>
+                                        <paper-item><span>Name: [[player.name]]</span><span>Position: [[player.position]]</span><span>Skill: [[player.skill]]</span></paper-item>
+                                    </template>
+                                </iron-list>
+                            </div>
                         </paper-card>
                     </div>
                 </template>

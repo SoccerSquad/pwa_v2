@@ -76,7 +76,7 @@ class JoinGame extends connect(store)(PageViewElement) {
             <paper-item><div class="headers">Pick an available game:</div></paper-item>
             <vaadin-combo-box label="Available games" item-label-path="location" item-value-path="time" id="available_games" items="${JSON.stringify(this.available_games)}">
                 <template>
-                    ([[index]]) <b>[[item.location]], <sub>[[item.date]], [[item.symbol]], [[item.filled_spots]]/[[item.total_players]]</sub></b>
+                    ([[index]]) <b>[[item.location]], <sub>[[item.date]], [[item.time]], [[item.filled_spots]]/[[item.total_players]]</sub></b>
                 </template>
             </vaadin-combo-box>
             <paper-button raised @click="${this._viewDetails}">View Details</paper-button>

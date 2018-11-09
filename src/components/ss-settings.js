@@ -22,7 +22,12 @@ class Settings extends PageViewElement {
     </style>
 
     <section style = "text-align:center">
-        <p>Settings</p>
+        <paper-button raised><a href="/editProfile">Edit Profile</a></paper-button>
+        <p>FAQ</p>
+        <p>How do I edit my profile?</p>
+        <p>Click on the button labelled "Edit Profile" above this FAQ section.</p>
+        <p>How do I change my location?</p>
+        <p>Enable GPS functionality so the app can detect your location</p>
     </section>
     `;
   }

@@ -36,12 +36,6 @@ class CreateGame extends connect(store)(PageViewElement) {
           width: 600px;
           margin: auto;
       }
-
-      paper-toast {
-          text-align: center;
-          padding-top: 100px;
-      }
-
       paper-input {
           margin: auto;
           width: 250px;

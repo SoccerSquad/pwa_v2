@@ -132,7 +132,7 @@ class EditProfile extends connect(store)(PageViewElement) {
         this._name = state.profile.name;
         this._position = state.profile.position;
         this._skill = state.profile.skill;
-        this._saved = state.profile.boolean;
+        this._saved = state.profile.saved;
     }
 }
 

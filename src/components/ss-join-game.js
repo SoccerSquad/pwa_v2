@@ -91,7 +91,10 @@ class JoinGame extends connect(store)(PageViewElement) {
             </div>
             <br><br>
             <paper-button class="join_game_button" raised @click="${this._joinGame}">Join Game</paper-button>
+            <br><br>
+            <paper-button raised><a href="/pendingGames">Pending Games</a></paper-button>
             <paper-toast id="joined" text="Game Joined"></paper-toast>
+            <paper-toast id="invalid" text="Invalid game selection"></paper-toast>
         </section>
         `;
     }
@@ -130,7 +133,8 @@ class JoinGame extends connect(store)(PageViewElement) {
 
     _joinGame() {
         var selected_game = this.shadowRoot.querySelector("#available_games").selectedItem;
-        if (typeof selected_game !== 'undefined' && this.game.location !== "" && this.profile.name !== "") {
+        if (typeof selected_game !== 'undefined') {
+            this.game = JSON.parse(JSON.stringify(selected_game));
             var temp_joined = this.shadowRoot.querySelector("#joined");
             var filled_spots = parseInt(this.game.filled_spots, 10);
             var filled_spots = filled_spots+1;
@@ -138,6 +142,8 @@ class JoinGame extends connect(store)(PageViewElement) {
             roster.push(JSON.parse(JSON.stringify(this.profile)));
             temp_joined.show();
             store.dispatch(game_join(this.game.location, this.game.date, this.game.time, this.game.total_players, filled_spots, roster));
+        } else {
+            this.shadowRoot.querySelector("#invalid").show();
         }
     }
 

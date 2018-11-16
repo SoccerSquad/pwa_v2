@@ -79,12 +79,19 @@ class PendingGames extends connect(store)(PageViewElement) {
         `;
     }
 
+    constructor() {
+        super();
+        this._pendingGames = "";
+    }
+
     static get properties() { return {
         _pendingGames: { type: Array },
     }}
 
     stateChanged(state) {
-      this._pendingGames = state.pending_games.pending_games;
+        if (typeof state.pending_games !== 'undefined') {
+            this._pendingGames = state.pending_games.pending_games;
+        }
     }
 }
 

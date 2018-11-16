@@ -118,6 +118,7 @@ class CreateGame extends connect(store)(PageViewElement) {
         </iron-form>
         <br><br>
         <paper-toast id="saved" text="Game Created"></paper-toast>
+        <paper-toast id="invalid" text="Ensure that the Create Game form has been completely filled"></paper-toast>
     </section>
     `;
     }
@@ -134,11 +135,16 @@ class CreateGame extends connect(store)(PageViewElement) {
         var temp_time = this.shadowRoot.querySelector("#time");
         var temp_players = this.shadowRoot.querySelector("#players");
         var temp_saved = this.shadowRoot.querySelector("#saved");
-        var total_players = parseInt(temp_players.value, 10);
-        var filled_spots = 1;
-        var roster = [JSON.parse(JSON.stringify(this._roster))];
-        temp_saved.show();
-        store.dispatch(game_submit(temp_loc.value.search, temp_date.value, temp_time.value, total_players.toString(), filled_spots.toString(), roster));
+        if (typeof temp_loc.value !== 'undefined' && typeof temp_date.value !== 'undefined' && typeof temp_time.value !== 'undefined' && typeof temp_players.value !== 'undefined') {
+            var total_players = parseInt(temp_players.value, 10);
+            var filled_spots = 1;
+            var roster = [JSON.parse(JSON.stringify(this._roster))];
+            temp_saved.show();
+            store.dispatch(game_submit(temp_loc.value.search, temp_date.value, temp_time.value, total_players.toString(), filled_spots.toString(), roster));
+        } else {
+            var temp_invalid = this.shadowRoot.querySelector("#invalid");
+            temp_invalid.show();
+        }
     }
 
     // This is called every time something is updated in the store.

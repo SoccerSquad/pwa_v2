@@ -56,7 +56,7 @@ class Login extends connect(store)(PageViewElement) {
                 }
             </style>
             <section>
-                <paper-input type="text" id="name" required label="Username" value="User"></paper-input>
+                <paper-input type="text" id="username" required label="Username" value="User"></paper-input>
                 <paper-input type="text" id="password" required label="Password" value="..."></paper-input>
                 <paper-button id="login_check" raised @click="${this._check_profile}"><a href="/home" class="disabled" id="login">Login</a></paper-button>
                 <p></p>
@@ -64,7 +64,7 @@ class Login extends connect(store)(PageViewElement) {
                     <form action="/profile" method="get">
                         <paper-input type="text" id="name" required label="Name" value="Player1"></paper-input>
                         <p></p>
-                        <paper-dropdown-menu label="Position" id="position" required>
+                        <paper-dropdown-menu label="Position" id="position" value="GK (Goalkeeper)" required>
                             <paper-listbox class="dropdown-content" slot="dropdown-content">
                                 <paper-item value="GK">GK (Goalkeeper)</paper-item>
                                 <paper-item value="SW">SW (Sweeper)</paper-item>
@@ -85,7 +85,7 @@ class Login extends connect(store)(PageViewElement) {
                             </paper-listbox>
                         </paper-dropdown-menu>
                         <p></p>
-                        <paper-dropdown-menu label="Skill Level" id="skill" required>
+                        <paper-dropdown-menu label="Skill Level" value="Intermediate" id="skill" required>
                             <paper-listbox class="dropdown-content" slot="dropdown-content">
                                 <paper-item value="Beginner">Beginner</paper-item>
                                 <paper-item value="Intermediate">Intermediate</paper-item>
@@ -94,11 +94,12 @@ class Login extends connect(store)(PageViewElement) {
                         </paper-dropdown-menu>
                         <br><br>
                         <paper-button raised @click="${this._submit}">Save</paper-button>
-                        <paper-button raised @click="${this._reset}">Reset</paper-button>
+                        <paper-button raised @click="${this._reset}">Reset to Default</paper-button>
                     </form>
                 </iron-form>
                 <br><br>
                 <paper-toast id="create_profile_first" text="Please create a profile first to login"></paper-toast>
+                <paper-toast id="fill_all_profile_fields" text="Please fill all fields to save a profile"></paper-toast>
                 <paper-toast id="saved" text="Profile Saved, you may now login"></paper-toast>
                 <paper-toast id="reset" text="Profile Reset"></paper-toast>
             </section>
@@ -130,7 +131,7 @@ class Login extends connect(store)(PageViewElement) {
         var temp_skill = this.shadowRoot.querySelector("#skill");
         var temp_saved = this.shadowRoot.querySelector("#saved");
         var saved = "true";
-        if (typeof temp_name.value !== 'undefined' && typeof temp_pos.value !== 'undefined' && typeof temp_skill.value !== 'undefined') {
+        if (typeof temp_name.value !== 'undefined' && temp_name.value !== '' && typeof temp_pos.value !== 'undefined' && typeof temp_skill.value !== 'undefined') {
             temp_saved.show();
             var temp_login = this.shadowRoot.querySelector("#login");
             temp_login.className = "enabled";
@@ -138,10 +139,10 @@ class Login extends connect(store)(PageViewElement) {
             store.dispatch(submit(temp_name.value, temp_pos.value, temp_skill.value, saved));
         } else {
             this._saved = 'false';
-            var temp_create_profile_first = this.shadowRoot.querySelector("#create_profile_first");
+            var temp_fill_all_profile_fields = this.shadowRoot.querySelector("#fill_all_profile_fields");
             var temp_login = this.shadowRoot.querySelector("#login");
             temp_login.className = "disabled";
-            temp_create_profile_first.show();
+            temp_fill_all_profile_fields.show();
         }
     }
 
@@ -153,7 +154,7 @@ class Login extends connect(store)(PageViewElement) {
         var temp_pos = this.shadowRoot.querySelector("#position");
         var temp_skill = this.shadowRoot.querySelector("#skill");
         temp_name.value = 'Player1';
-        temp_pos.value = 'GK';
+        temp_pos.value = 'GK (Goalkeeper)';
         temp_skill.value = 'Intermediate';
         var temp_reset = this.shadowRoot.querySelector("#reset");
         temp_reset.show();

@@ -106,6 +106,11 @@ class MyApp extends connect(store)(LitElement) {
         border-bottom: 4px solid var(--app-header-selected-color);
       }
 
+      a.disabled {
+          pointer-events: none;
+          cursor: default;
+      }
+
       .menu-btn {
         background: none;
         border: none;
@@ -193,9 +198,9 @@ class MyApp extends connect(store)(LitElement) {
       <img class="logo" src="images/SS.png" alt="Soccer Squad Logo"/>
       <!-- This gets hidden on a small screen-->
       <nav class="toolbar-list">
-        <a ?selected="${this._page === 'home'}" href="/home">Home</a>
-        <a ?selected="${this._page === 'pendingGames'}" href="/pendingGames">Pending Games</a>
-        <a ?selected="${this._page === 'settings'}" href="/settings">Settings</a>
+        <a id="home_toolbar" class=${this.profile_saved ? 'enabled' : 'disabled'} ?selected="${this._page === 'home'}" href="/home">Home</a>
+        <a id="pending_games_toolbar" class=${this.profile_saved ? 'enabled' : 'disabled'} ?selected="${this._page === 'pendingGames'}" href="/pendingGames">Pending Games</a>
+        <a id="settings_toolbar" class=${this.profile_saved ? 'enabled' : 'disabled'} ?selected="${this._page === 'settings'}" href="/settings">Settings</a>
       </nav>
     </app-header>
 
@@ -212,13 +217,13 @@ class MyApp extends connect(store)(LitElement) {
     <!-- Main content -->
     <main role="main" class="main-content">
         <ss-login class="page" ?active="${this._page === 'login'}"></ss-login>
-        <ss-home class="page" ?active="${this._page === 'home'}"></ss-home>
+        <ss-home class="page" ?active="${this._page === 'home' && this.profile_saved}"></ss-home>
         <ss-edit-profile class="page" ?active="${this._page === 'editProfile'}"></ss-edit-profile>
         <ss-element-view-profile class="page" ?active="${this._page === 'viewProfile'}"></ss-element-view-profile>
         <ss-create-game class="page" ?active="${this._page === 'createGame'}"></ss-create-game>
         <ss-pending-games class="page" ?active="${this._page === 'pendingGames'}"></ss-pending-games>
         <ss-join-game class="page" ?active="${this._page === 'joinGame'}"></ss-join-game>
-        <ss-settings class="page" ?active="${this._page === 'settings'}"></ss-settings>
+        <ss-settings class="page" ?active="${this._page === 'settings' && this.profile_saved}"></ss-settings>
         <my-view404 class="page" ?active="${this._page === 'view404'}"></my-view404>
     </main>
 
@@ -243,6 +248,7 @@ class MyApp extends connect(store)(LitElement) {
 
   constructor() {
     super();
+    this.profile_saved = false;
     // To force all event listeners for gestures to be passive.
     // See https://www.polymer-project.org/3.0/docs/devguide/settings#setting-passive-touch-gestures
     setPassiveTouchGestures(true);
@@ -274,12 +280,15 @@ class MyApp extends connect(store)(LitElement) {
     store.dispatch(updateDrawerState(e.target.opened));
   }
 
-  stateChanged(state) {
-    this._page = state.app.page;
-    this._offline = state.app.offline;
-    this._snackbarOpened = state.app.snackbarOpened;
-    this._drawerOpened = state.app.drawerOpened;
-  }
+    stateChanged(state) {
+        if (typeof state.profile !== 'undefined' && typeof state.profile !== 'undefined') {
+            this.profile_saved = state.profile.saved;
+        }
+        this._page = state.app.page;
+        this._offline = state.app.offline;
+        this._snackbarOpened = state.app.snackbarOpened;
+        this._drawerOpened = state.app.drawerOpened;
+    }
 }
 
 window.customElements.define('my-app', MyApp);

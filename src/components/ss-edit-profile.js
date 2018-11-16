@@ -31,12 +31,6 @@ class EditProfile extends connect(store)(PageViewElement) {
           text-align: center;
           padding-top: 100px;
       }
-
-      paper-toast {
-          text-align: center;
-          padding-top: 100px;
-      }
-
       paper-input {
           margin: auto;
           width: 250px;
@@ -55,7 +49,7 @@ class EditProfile extends connect(store)(PageViewElement) {
             <form action="/profile" method="get">
                 <paper-input type="text" id="name" required label="Name" value="Player1"></paper-input>
                 <p></p>
-                <paper-dropdown-menu label="Position" id="position" required>
+                <paper-dropdown-menu label="Position" id="position" value="GK (Goalkeeper)" required>
                   <paper-listbox class="dropdown-content" slot="dropdown-content">
                     <paper-item value="GK">GK (Goalkeeper)</paper-item>
                     <paper-item value="SW">SW (Sweeper)</paper-item>
@@ -76,7 +70,7 @@ class EditProfile extends connect(store)(PageViewElement) {
                   </paper-listbox>
                 </paper-dropdown-menu>
                 <p></p>
-                <paper-dropdown-menu label="Skill Level" id="skill" required>
+                <paper-dropdown-menu label="Skill Level" id="skill" value="Intermediate" required>
                   <paper-listbox class="dropdown-content" slot="dropdown-content">
                     <paper-item value="Beginner">Beginner</paper-item>
                     <paper-item value="Intermediate">Intermediate</paper-item>
@@ -93,6 +87,7 @@ class EditProfile extends connect(store)(PageViewElement) {
         <br><br>
         <paper-toast id="saved" text="Profile Saved"></paper-toast>
         <paper-toast id="reset" text="Profile Reset"></paper-toast>
+        <paper-toast id="fill_all_profile_fields" text="Please fill all fields to save a profile"></paper-toast>
     </section>
     `;
     }
@@ -111,8 +106,12 @@ class EditProfile extends connect(store)(PageViewElement) {
         var temp_skill = this.shadowRoot.querySelector("#skill");
         var temp_saved = this.shadowRoot.querySelector("#saved");
         var saved = "true";
-        temp_saved.show();
-        store.dispatch(submit(temp_name.value, temp_pos.value, temp_skill.value, saved));
+        if (typeof temp_name.value !== 'undefined' && temp_name.value !== '' && typeof temp_pos.value !== 'undefined' && typeof temp_skill.value !== 'undefined') {
+            temp_saved.show();
+            store.dispatch(submit(temp_name.value, temp_pos.value, temp_skill.value, saved));
+        } else {
+            this.shadowRoot.querySelector("#fill_all_profile_fields").show();
+        }
     }
 
     _reset() {
@@ -120,7 +119,7 @@ class EditProfile extends connect(store)(PageViewElement) {
         var temp_pos = this.shadowRoot.querySelector("#position");
         var temp_skill = this.shadowRoot.querySelector("#skill");
         temp_name.value = 'Player1';
-        temp_pos.value = 'GK';
+        temp_pos.value = 'GK (Goalkeeper)';
         temp_skill.value = 'Intermediate';
         var temp_reset = this.shadowRoot.querySelector("#reset");
         temp_reset.show();

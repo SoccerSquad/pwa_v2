@@ -135,7 +135,7 @@ class CreateGame extends connect(store)(PageViewElement) {
         var temp_time = this.shadowRoot.querySelector("#time");
         var temp_players = this.shadowRoot.querySelector("#players");
         var temp_saved = this.shadowRoot.querySelector("#saved");
-        if (typeof temp_loc.value !== 'undefined' && typeof temp_date.value !== 'undefined' && typeof temp_time.value !== 'undefined' && typeof temp_players.value !== 'undefined') {
+        if (typeof temp_loc.value !== 'undefined' && temp_loc.value.search !== '' && typeof temp_date.value !== 'undefined' && typeof temp_time.value !== 'undefined' && typeof temp_players.value !== 'undefined') {
             var total_players = parseInt(temp_players.value, 10);
             var filled_spots = 1;
             var roster = [JSON.parse(JSON.stringify(this._roster))];

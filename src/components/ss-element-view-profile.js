@@ -58,7 +58,7 @@ class ViewProfileElement extends connect(store)(PageViewElement) {
   constructor() {
     super();
     this._name = 'Player1';
-    this._position = 'GK';
+    this._position = 'GK (Goalkeeper)';
     this._skill = 'Intermediate'
   }
 

@@ -31,6 +31,7 @@ import '@polymer/app-layout/app-drawer/app-drawer.js';
 import '@polymer/app-layout/app-header/app-header.js';
 import '@polymer/app-layout/app-scroll-effects/effects/waterfall.js';
 import '@polymer/app-layout/app-toolbar/app-toolbar.js';
+import '@polymer/iron-list/iron-list.js';
 import { menuIcon } from './my-icons.js';
 import './snack-bar.js';
 
@@ -39,6 +40,17 @@ class MyApp extends connect(store)(LitElement) {
     // Anything that's related to rendering should be done in here.
     return html`
     <style>
+
+    .main_grid {
+        width: 1500px;
+        padding-top: 190px;
+        text-align: center;
+      display: grid;
+      grid-template-columns: 1200px 300px;
+      grid-gap: 5px;
+      grid-auto-rows: minmax(100px, auto);
+    }
+
       :host {
         --app-drawer-width: 256px;
         display: block;
@@ -63,7 +75,7 @@ class MyApp extends connect(store)(LitElement) {
         position: fixed;
         top: 0;
         left: 0;
-        width: 100%;
+        width: 80%;
         text-align: center;
         background-color: var(--app-header-background-color);
         color: var(--app-header-text-color);
@@ -159,6 +171,21 @@ class MyApp extends connect(store)(LitElement) {
         display: block;
       }
 
+      .pending_games_sidebar {
+          padding-top: 95px;
+          border-left: 1px solid black;
+      }
+
+      .all_games {
+          --iron-list-items-container: {
+              margin: auto;
+          };
+          text-align: center;
+          width: 100%;
+          margin: auto;
+          height: 70vh; /* don't use % values unless the parent element is sized. */
+      }
+
       footer {
         padding: 24px;
         background: var(--app-drawer-background-color);
@@ -166,9 +193,15 @@ class MyApp extends connect(store)(LitElement) {
         text-align: center;
       }
 
+      paper-item {
+          text-align: center;
+          margin: auto;
+          width: 70%;
+      }
+
       /* Wide layout: when the viewport width is bigger than 460px, layout
       changes to a wide layout. */
-      @media (min-width: 460px) {
+      @media (min-width: 400px) {
         .toolbar-list {
           display: block;
         }
@@ -178,7 +211,8 @@ class MyApp extends connect(store)(LitElement) {
         }
 
         .main-content {
-          padding-top: 190px;
+          padding-top: 10px;
+          border-right: 1px solid black;
         }
 
         /* The drawer button isn't shown in the wide layout, so we don't
@@ -215,17 +249,28 @@ class MyApp extends connect(store)(LitElement) {
     </app-drawer>
 
     <!-- Main content -->
-    <main role="main" class="main-content">
-        <ss-login class="page" ?active="${this._page === 'login'}"></ss-login>
-        <ss-home class="page" ?active="${this._page === 'home' && this.profile_saved}"></ss-home>
-        <ss-edit-profile class="page" ?active="${this._page === 'editProfile'}"></ss-edit-profile>
-        <ss-element-view-profile class="page" ?active="${this._page === 'viewProfile'}"></ss-element-view-profile>
-        <ss-create-game class="page" ?active="${this._page === 'createGame'}"></ss-create-game>
-        <ss-pending-games class="page" ?active="${this._page === 'pendingGames'}"></ss-pending-games>
-        <ss-join-game class="page" ?active="${this._page === 'joinGame'}"></ss-join-game>
-        <ss-settings class="page" ?active="${this._page === 'settings' && this.profile_saved}"></ss-settings>
-        <my-view404 class="page" ?active="${this._page === 'view404'}"></my-view404>
-    </main>
+    <div class="main_grid">
+        <main role="main" class="main-content">
+            <ss-login class="page" ?active="${this._page === 'login'}"></ss-login>
+            <ss-home class="page" ?active="${this._page === 'home' && this.profile_saved}"></ss-home>
+            <ss-edit-profile class="page" ?active="${this._page === 'editProfile'}"></ss-edit-profile>
+            <ss-element-view-profile class="page" ?active="${this._page === 'viewProfile'}"></ss-element-view-profile>
+            <ss-create-game class="page" ?active="${this._page === 'createGame'}"></ss-create-game>
+            <ss-pending-games class="page" ?active="${this._page === 'pendingGames'}"></ss-pending-games>
+            <ss-join-game class="page" ?active="${this._page === 'joinGame'}"></ss-join-game>
+            <ss-settings class="page" ?active="${this._page === 'settings' && this.profile_saved}"></ss-settings>
+            <my-view404 class="page" ?active="${this._page === 'view404'}"></my-view404>
+        </main>
+        <div class="pending_games_sidebar">
+            <h2>Pending Games</h2>
+            <p id='pending_games_not_shown_message'>Login to view</p>
+            <iron-list class="all_games" label="Pending Games" id="pending_games" items="${JSON.stringify(this._pendingGames)}">
+                <template>
+                    <paper-item><span>([[index]]) <b>[[item.location]] <br><sub>[[item.date]], [[item.time]], [[item.filled_spots]]/[[item.total_players]]</sub></b></span></paper-item>
+                </template>
+            </iron-list>
+        </div>
+    </div>
 
     <footer>
       <p>${this.appTitle + '-' + this._page}</p>
@@ -242,13 +287,16 @@ class MyApp extends connect(store)(LitElement) {
       _page: { type: String },
       _drawerOpened: { type: Boolean },
       _snackbarOpened: { type: Boolean },
-      _offline: { type: Boolean }
+      _offline: { type: Boolean },
+      _pendingGames: { type: Object }
     }
   }
 
   constructor() {
     super();
     this.profile_saved = false;
+    this._pendingGames = '';
+    this._logged_in = false;
     // To force all event listeners for gestures to be passive.
     // See https://www.polymer-project.org/3.0/docs/devguide/settings#setting-passive-touch-gestures
     setPassiveTouchGestures(true);
@@ -263,6 +311,11 @@ class MyApp extends connect(store)(LitElement) {
 
   updated(changedProps) {
     if (changedProps.has('_page')) {
+        if (this._page === 'home') {
+            var temp_msg = this.shadowRoot.querySelector("#pending_games_not_shown_message");
+            temp_msg.innerHTML = '';
+            this._logged_in = true;
+        }
       const pageTitle = this.appTitle + ' - ' + this._page;
       updateMetadata({
         title: pageTitle,
@@ -283,6 +336,9 @@ class MyApp extends connect(store)(LitElement) {
     stateChanged(state) {
         if (typeof state.profile !== 'undefined' && typeof state.profile !== 'undefined') {
             this.profile_saved = state.profile.saved;
+        }
+        if (typeof state.pending_games !== 'undefined') {
+            this._pendingGames = state.pending_games.pending_games;
         }
         this._page = state.app.page;
         this._offline = state.app.offline;

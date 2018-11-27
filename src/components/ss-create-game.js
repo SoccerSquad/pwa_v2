@@ -89,7 +89,7 @@ class CreateGame extends connect(store)(PageViewElement) {
                 label="Pick a place" hide-error></paper-input-place>
                 <p></p>
                 <paper-item><div class="headers">Pick one of the available dates:</div></paper-item>
-                <vaadin-date-picker id="date" label="Game Day" value="1901-01-01"></vaadin-date-picker>
+                <vaadin-date-picker id="date" label="Game Day" value="${this.today}"></vaadin-date-picker>
                 <p></p>
                 <paper-item><div class="headers">Pick one of the available time slots:</div></paper-item>
                 <vaadin-time-picker id="time" label="Time" value="00:00"></vaadin-time-picker>
@@ -121,6 +121,12 @@ class CreateGame extends connect(store)(PageViewElement) {
         <paper-toast id="invalid" text="Ensure that the Create Game form has been completely filled"></paper-toast>
     </section>
     `;
+    }
+
+    constructor () {
+        super();
+        var d = new Date();
+        this.today = (d.getYear()+1900).toString() + '-' + d.getMonth().toString() + '-' + d.getDate().toString();
     }
 
     static get properties() { return {

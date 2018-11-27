@@ -47,9 +47,9 @@ class EditProfile extends connect(store)(PageViewElement) {
 
         <iron-form id="form1" allowRedirect="true">
             <form action="/profile" method="get">
-                <paper-input type="text" id="name" required label="Name" value="Player1"></paper-input>
+                <paper-input type="text" id="name" required label="Username" value="${this._name}"></paper-input>
                 <p></p>
-                <paper-dropdown-menu label="Position" id="position" value="GK (Goalkeeper)" required>
+                <paper-dropdown-menu label="Position" id="position" value="${this._position}" required>
                   <paper-listbox class="dropdown-content" slot="dropdown-content">
                     <paper-item value="GK">GK (Goalkeeper)</paper-item>
                     <paper-item value="SW">SW (Sweeper)</paper-item>
@@ -70,7 +70,7 @@ class EditProfile extends connect(store)(PageViewElement) {
                   </paper-listbox>
                 </paper-dropdown-menu>
                 <p></p>
-                <paper-dropdown-menu label="Skill Level" id="skill" value="Intermediate" required>
+                <paper-dropdown-menu label="Skill Level" id="skill" value="${this._skill}" required>
                   <paper-listbox class="dropdown-content" slot="dropdown-content">
                     <paper-item value="Beginner">Beginner</paper-item>
                     <paper-item value="Intermediate">Intermediate</paper-item>
@@ -90,6 +90,13 @@ class EditProfile extends connect(store)(PageViewElement) {
         <paper-toast id="fill_all_profile_fields" text="Please fill all fields to save a profile"></paper-toast>
     </section>
     `;
+    }
+
+    constructor() {
+      super();
+      this._name = 'Player1';
+      this._position = 'GK (Goalkeeper)';
+      this._skill = 'Intermediate';
     }
 
     static get properties() { return {

@@ -43,10 +43,13 @@ class PendingGames extends connect(store)(PageViewElement) {
                 text-align: center;
                 width: 600px;
                 margin: auto;
-                height: 70vh; /* don't use % values unless the parent element is sized. */
+                height: 150vh; /* don't use % values unless the parent element is sized. */
             }
             .roster {
                 20vh;
+            }
+            .player {
+                width: 200px;
             }
             span {
                 width: 150px;
@@ -56,18 +59,22 @@ class PendingGames extends connect(store)(PageViewElement) {
                 width: 100%;
                 margin: auto;
             }
+            a {
+                padding-left: 3em;
+                padding-right: 3em;
+            }
         </style>
         <section style = "text-align:center">
             <iron-list class="all_games" items="${JSON.stringify(this._pendingGames)}" as="game">
                 <template>
                     <div class="vertical-section-container">
                         <paper-card>
-                            <paper-item><span>Game: [[game.location]]</span><span>Date: [[game.date]]</span><span>Time: [[game.time]]</span><span>Spots Filled: [[game.filled_spots]]/[[game.total_players]]</span></paper-item>
+                            <paper-item><span>Game [[index]]: [[game.location]]</span><span>Date: [[game.date]]</span><span>Time: [[game.time]]</span><span>Spots Filled: [[game.filled_spots]]/[[game.total_players]]</span></paper-item>
                             <div class="details">
                                 <paper-item>Roster: </paper-item>
                                 <iron-list class="roster" items="[[game.roster]]" as="player">
                                     <template>
-                                        <paper-item><span>Name: [[player.name]]</span><span>Position: [[player.position]]</span><span>Skill: [[player.skill]]</span></paper-item>
+                                        <paper-item><span class="player">[[player.name]]</span><span class="player">[[player.position]]</span><span class="player">Skill: [[player.skill]]</span></paper-item>
                                     </template>
                                 </iron-list>
                             </div>
@@ -75,6 +82,11 @@ class PendingGames extends connect(store)(PageViewElement) {
                     </div>
                 </template>
             </iron-list>
+            <p></p>
+            <paper-button raised><a href="/createGame">Create Game</a></paper-button>
+            <p></p>
+            <paper-button raised><a href="/joinGame">Join Game</a></paper-button>
+            <p></p>
         </section>
         `;
     }

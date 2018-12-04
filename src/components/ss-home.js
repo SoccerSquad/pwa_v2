@@ -23,6 +23,10 @@ class Home extends connect(store)(PageViewElement) {
       paper-button + p {
           margin-top: 30px;
       }
+      a {
+          padding-left: 3em;
+          padding-right: 3em;
+      }
     </style>
 
       <section style = "text-align:center">

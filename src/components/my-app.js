@@ -42,11 +42,11 @@ class MyApp extends connect(store)(LitElement) {
     <style>
 
     .main_grid {
-        width: 1500px;
+        width: 100%;
         padding-top: 190px;
         text-align: center;
       display: grid;
-      grid-template-columns: 1200px 300px;
+      grid-template-columns: 4fr 1fr;
       grid-gap: 5px;
       grid-auto-rows: minmax(100px, auto);
     }
@@ -74,8 +74,8 @@ class MyApp extends connect(store)(LitElement) {
       app-header {
         position: fixed;
         top: 0;
-        left: 0;
-        width: 80%;
+        right: 10%;
+        width: 100%;
         text-align: center;
         background-color: var(--app-header-background-color);
         color: var(--app-header-text-color);
@@ -121,6 +121,8 @@ class MyApp extends connect(store)(LitElement) {
       a.disabled {
           pointer-events: none;
           cursor: default;
+          color: transparent;
+          user-select: none;
       }
 
       .menu-btn {
@@ -188,14 +190,16 @@ class MyApp extends connect(store)(LitElement) {
 
       footer {
         padding: 24px;
+        width: 100%;
+        right: 10%;
         background: var(--app-drawer-background-color);
         color: var(--app-drawer-text-color);
         text-align: center;
       }
 
       paper-item {
-          text-align: center;
-          margin: auto;
+          text-align: left;
+          margin-left: auto;
           width: 70%;
       }
 
@@ -232,9 +236,9 @@ class MyApp extends connect(store)(LitElement) {
       <img class="logo" src="images/SS.png" alt="Soccer Squad Logo"/>
       <!-- This gets hidden on a small screen-->
       <nav class="toolbar-list">
-        <a id="home_toolbar" class=${this.profile_saved ? 'enabled' : 'disabled'} ?selected="${this._page === 'home'}" href="/home">Home</a>
-        <a id="pending_games_toolbar" class=${this.profile_saved ? 'enabled' : 'disabled'} ?selected="${this._page === 'pendingGames'}" href="/pendingGames">Pending Games</a>
-        <a id="settings_toolbar" class=${this.profile_saved ? 'enabled' : 'disabled'} ?selected="${this._page === 'settings'}" href="/settings">Settings</a>
+        <a id="home_toolbar" class=${this._logged_in ? 'enabled' : 'disabled'} ?selected="${this._page === 'home'}" href="/home">Home</a>
+        <a id="pending_games_toolbar" class=${this._logged_in ? 'enabled' : 'disabled'} ?selected="${this._page === 'pendingGames'}" href="/pendingGames">Pending Games</a>
+        <a id="settings_toolbar" class=${this._logged_in ? 'enabled' : 'disabled'} ?selected="${this._page === 'settings'}" href="/settings">Settings</a>
       </nav>
     </app-header>
 
@@ -266,7 +270,10 @@ class MyApp extends connect(store)(LitElement) {
             <p id='pending_games_not_shown_message'>Login to view</p>
             <iron-list class="all_games" label="Pending Games" id="pending_games" items="${JSON.stringify(this._pendingGames)}">
                 <template>
-                    <paper-item><span>([[index]]) <b>[[item.location]] <br><sub>[[item.date]], [[item.time]], [[item.filled_spots]]/[[item.total_players]]</sub></b></span></paper-item>
+                    <div>
+                        <p class="game">([[index]]) <b>  [[item.location]]</b></p>
+                        <p class="game"><sub>[[item.date]], [[item.time]], [[item.filled_spots]]/[[item.total_players]]</sub></p>
+                    </div>
                 </template>
             </iron-list>
         </div>
@@ -288,7 +295,8 @@ class MyApp extends connect(store)(LitElement) {
       _drawerOpened: { type: Boolean },
       _snackbarOpened: { type: Boolean },
       _offline: { type: Boolean },
-      _pendingGames: { type: Object }
+      _pendingGames: { type: Object },
+      _logged_in: { type: Boolean },
     }
   }
 
@@ -314,7 +322,6 @@ class MyApp extends connect(store)(LitElement) {
         if (this._page === 'home') {
             var temp_msg = this.shadowRoot.querySelector("#pending_games_not_shown_message");
             temp_msg.innerHTML = '';
-            this._logged_in = true;
         }
       const pageTitle = this.appTitle + ' - ' + this._page;
       updateMetadata({
@@ -341,6 +348,7 @@ class MyApp extends connect(store)(LitElement) {
             this._pendingGames = state.pending_games.pending_games;
         }
         this._page = state.app.page;
+        this._logged_in = (this._page !== 'login');
         this._offline = state.app.offline;
         this._snackbarOpened = state.app.snackbarOpened;
         this._drawerOpened = state.app.drawerOpened;

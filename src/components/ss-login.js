@@ -9,7 +9,12 @@ import '@polymer/paper-listbox/paper-listbox.js';
 import '@polymer/paper-item/paper-item.js';
 import '@polymer/paper-button/paper-button.js';
 import '@polymer/paper-toast/paper-toast.js';
+import '@vaadin/vaadin-text-field/vaadin-password-field.js';
 import { PageViewElement } from './page-view-element.js';
+
+import {
+  navigate
+} from '../actions/app.js';
 
 import { connect } from 'pwa-helpers/connect-mixin.js';
 import { store } from '../store.js';
@@ -57,15 +62,18 @@ class Login extends connect(store)(PageViewElement) {
             </style>
             <section>
                 <H1>Login</H1>
-                <paper-input type="text" id="username" required label="Username" value="User"></paper-input>
-                <paper-input type="text" id="password" required label="Password" value="..."></paper-input>
+                <paper-input type="text" id="username_login" required label="Username" value="User"></paper-input>
+                <vaadin-password-field type="text" id="password_login" placeholder="Enter password" label="Password"></vaadin-password-field>
+                <p></p>
                 <paper-button id="login_check" raised @click="${this._check_profile}"><a href="/home" class="disabled" id="login">Login</a></paper-button>
                 <p></p>
                 <p></p>
                 <H1>Create Profile Below</H1>
                 <iron-form id="form1" allowRedirect="true">
                     <form action="/profile" method="get">
-                        <paper-input type="text" id="name" required label="Username" value="Player1"></paper-input>
+                        <paper-input type="text" id="username_create" required label="Username" value="Player1"></paper-input>
+                        <p></p>
+                        <vaadin-password-field type="text" id="password_create" placeholder="Password" label="Password"></vaadin-password-field>
                         <p></p>
                         <paper-dropdown-menu label="Position" id="position" value="GK (Goalkeeper)" required>
                             <paper-listbox class="dropdown-content" slot="dropdown-content">
@@ -103,6 +111,7 @@ class Login extends connect(store)(PageViewElement) {
                 <br><br>
                 <paper-toast id="create_profile_first" text="Please create a profile first to login"></paper-toast>
                 <paper-toast id="fill_all_profile_fields" text="Please fill all fields to save a profile"></paper-toast>
+                <paper-toast id="incorrect_login" text="Incorrect Username or Password"></paper-toast>
                 <paper-toast id="saved" text="Profile Created, you may now login"></paper-toast>
                 <paper-toast id="reset" text="Profile Reset"></paper-toast>
             </section>
@@ -112,6 +121,7 @@ class Login extends connect(store)(PageViewElement) {
     constructor() {
       super();
       this._saved = 'false';
+      this._password = '';
     }
 
     static get properties() { return {
@@ -120,31 +130,42 @@ class Login extends connect(store)(PageViewElement) {
         _position: { type: String },
         _skill: {type: String},
         _saved: {type: String},
+        _password: { type: String },
     }}
 
     _check_profile() {
+        var temp_name = this.shadowRoot.querySelector("#username_login");
+        var temp_password = this.shadowRoot.querySelector("#password_login");
         if (this._saved !== 'true') {
             this.shadowRoot.querySelector("#create_profile_first").show();
+        } else if (this._name !== temp_name.value || this._password !== temp_password.value) {
+            this.shadowRoot.querySelector("#incorrect_login").show();
+        } else {
+            window.history.pushState({}, '', '/home');
+            store.dispatch(navigate(decodeURIComponent(window.location.pathname)));
         }
     }
 
     _submit() {
-        var temp_name = this.shadowRoot.querySelector("#name");
+        var temp_name = this.shadowRoot.querySelector("#username_create");
+        var temp_password = this.shadowRoot.querySelector("#password_create");
         var temp_pos = this.shadowRoot.querySelector("#position");
         var temp_skill = this.shadowRoot.querySelector("#skill");
         var temp_saved = this.shadowRoot.querySelector("#saved");
         var saved = "true";
-        if (typeof temp_name.value !== 'undefined' && temp_name.value !== '' && typeof temp_pos.value !== 'undefined' && typeof temp_skill.value !== 'undefined') {
+        if ((typeof temp_name.value !== 'undefined' && temp_name.value !== '') && (typeof temp_password.value !== 'undefined' && temp_password.value !== '') && (typeof temp_pos.value !== 'undefined' && typeof temp_skill.value !== 'undefined')) {
             temp_saved.show();
-            var temp_login = this.shadowRoot.querySelector("#login");
-            temp_login.className = "enabled";
+            // var temp_login = this.shadowRoot.querySelector("#login");
+            // temp_login.className = "enabled";
             this._saved = 'true';
+            this._password = temp_password.value;
             store.dispatch(submit(temp_name.value, temp_pos.value, temp_skill.value, saved));
         } else {
             this._saved = 'false';
+            this._password = '';
             var temp_fill_all_profile_fields = this.shadowRoot.querySelector("#fill_all_profile_fields");
-            var temp_login = this.shadowRoot.querySelector("#login");
-            temp_login.className = "disabled";
+            // var temp_login = this.shadowRoot.querySelector("#login");
+            // temp_login.className = "disabled";
             temp_fill_all_profile_fields.show();
         }
     }

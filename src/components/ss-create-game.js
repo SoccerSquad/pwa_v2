@@ -126,7 +126,7 @@ class CreateGame extends connect(store)(PageViewElement) {
     constructor () {
         super();
         var d = new Date();
-        this.today = (d.getYear()+1900).toString() + '-' + d.getMonth().toString() + '-' + d.getDate().toString();
+        this.today = (d.getYear()+1900).toString() + '-' + (d.getMonth()+1).toString() + '-' + d.getDate().toString();
     }
 
     static get properties() { return {

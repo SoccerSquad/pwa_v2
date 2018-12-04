@@ -191,7 +191,6 @@ class MyApp extends connect(store)(LitElement) {
       footer {
         padding: 24px;
         width: 100%;
-        right: 10%;
         background: var(--app-drawer-background-color);
         color: var(--app-drawer-text-color);
         text-align: center;

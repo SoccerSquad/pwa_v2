@@ -40,6 +40,7 @@
     "@vaadin/vaadin-date-picker": "^3.3.0",
     "@vaadin/vaadin-grid": "^5.2.4",
     "@vaadin/vaadin-list-box": "^1.1.0",
+    "@vaadin/vaadin-text-field": "^2.1.5",
     "@vaadin/vaadin-time-picker": "^1.1.0",
     "@webcomponents/webcomponentsjs": "^2.0.0",
     "paper-input-place": "^2.0.1",
@@ -60,10 +61,10 @@
     "gulp-replace": "^1.0.0",
     "mocha": "^5.2.0",
     "pixelmatch": "^4.0.2",
-    "polymer-cli": "^1.7.6",
+    "polymer-cli": "^1.9.1",
     "polyserve": "^0.27.0",
     "prpl-server": "^1.2.0",
     "puppeteer": "^1.5.0",
-    "wct-browser-legacy": "^1.0.1"
+    "wct-browser-legacy": "^1.0.2"
   }
 }
